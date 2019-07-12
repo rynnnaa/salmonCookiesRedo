@@ -19,7 +19,7 @@ function Store (location, min, max, avgCookie) {
 
 Store.prototype.generateCustomersPerHour = function(min, max) {
   for(var i = 0; i < openHours.length; i++) {
-    console.log('THIS IS DOPE');
+    
     var randomCustomer = Math.floor(Math.random() * (max - min + 1) + min);
     this.customersPerHour.push(randomCustomer);
   }
@@ -28,7 +28,6 @@ Store.prototype.generateCustomersPerHour = function(min, max) {
 Store.prototype.generateCookiesPerHour = function() {
 
   this.generateCustomersPerHour(this.min, this.max);
-  console.log('SUP');
   for(var i = 0; i < openHours.length; i++) {
     var perHour = Math.floor(this.customersPerHour[i] * this.avgCookie);
     this.cookiesPerHour.push(perHour);
@@ -68,3 +67,46 @@ new Store('Sea-Tac Airport', 3, 24, 1.2);
 new Store('Seattle Center', 11, 38, 3.7);
 new Store('Capitol Hill', 20, 38, 2.3);
 new Store('Alki', 2, 16, 4.6);
+
+function makeHeaderRow() {
+  var trEl = document.createElement('tr');
+
+  var thEl = document.createElement('th');
+  thEl.textContent = 'locations';
+  trEl.appendChild(thEl);
+  console.log('Did I get here?');
+
+  for(var i = 0; i < openHours.length; i++) {
+    thEl = document.createElement('th');
+    thEl.textContent = openHours[i];
+    trEl.appendChild(thEl);
+  }
+
+  thEl = document.createElement('th');
+  thEl.textContent = 'Location Totals';
+  trEl.appendChild(thEl);
+
+  var theBody = document.createElement('body');
+  theBody.appendChild(trEl);
+}
+console.log('Did I get here?');
+
+function makeFooterRow() {
+
+}
+
+function renderTable() {
+  var theBody = document.createElement('body');
+  theBody.innerHTML = '';
+  makeHeaderRow();
+  for(var i = 0; i < Store.length; i++) {
+    Store.all[i].render();
+  }
+  makeFooterRow();
+}
+
+renderTable();
+
+
+
+
