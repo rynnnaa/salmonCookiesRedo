@@ -1,6 +1,7 @@
 'use strict';
 var store = [];
 var openHours = ['6AM','7AM','8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM',];
+var theTable = document.getElementById('sales-table');
 
 function Store (location, min, max, avgCookie) {
   this.location = location;
@@ -18,8 +19,7 @@ function Store (location, min, max, avgCookie) {
 }
 
 Store.prototype.generateCustomersPerHour = function(min, max) {
-  for(var i = 0; i < openHours.length; i++) {
-    
+  for(var i = 0; i < openHours.length; i++) { 
     var randomCustomer = Math.floor(Math.random() * (max - min + 1) + min);
     this.customersPerHour.push(randomCustomer);
   }
@@ -62,6 +62,26 @@ Store.prototype.postToPage = function() {
   ulEl.appendChild(totalEl);
 };
 
+Store.prototype.render = function() {
+  this.generateCustomersPerHour();
+  var trEl = document.createElement('tr');
+  var tdEl = document.createElement('td');
+  tdEl.textContent = this.location;
+  trEl.appendChild(tdEl);
+
+  for(var i = 0; i < openHours.length; i++) {
+    tdEl = document.createElement('td');
+    tdEl.textContent = this.cookiesPerHour[i];
+    trEl.appendChild(tdEl);
+  }
+
+  var thEl = document.createElement('th');
+  thEl.textContent = this.totalCookies;
+  trEl.appendChild(thEl);
+  theTable.appendChild(trEl);
+
+};
+
 new Store('1st and Pike', 23, 65, 6.3);
 new Store('Sea-Tac Airport', 3, 24, 1.2);
 new Store('Seattle Center', 11, 38, 3.7);
@@ -86,8 +106,7 @@ function makeHeaderRow() {
   thEl.textContent = 'Location Totals';
   trEl.appendChild(thEl);
 
-  var theBody = document.createElement('body');
-  theBody.appendChild(trEl);
+  theTable.appendChild(trEl);
 }
 console.log('Did I get here?');
 
@@ -96,16 +115,16 @@ function makeFooterRow() {
 }
 
 function renderTable() {
-  var theBody = document.createElement('body');
-  theBody.innerHTML = '';
+  theTable.innerHTML = '';
   makeHeaderRow();
-  for(var i = 0; i < Store.length; i++) {
-    Store.all[i].render();
+  for(var i = 0; i < store.length; i++) {
+    store[i].render();
   }
   makeFooterRow();
 }
 
 renderTable();
+console.log('HOW ABOUT nNOWWWWWWWWWWWWWWWWWWWW');
 
 
 
