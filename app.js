@@ -19,7 +19,7 @@ function Store (location, min, max, avgCookie) {
 }
 
 Store.prototype.generateCustomersPerHour = function(min, max) {
-  for(var i = 0; i < openHours.length; i++) { 
+  for(var i = 0; i < openHours.length; i++) {
     var randomCustomer = Math.floor(Math.random() * (max - min + 1) + min);
     this.customersPerHour.push(randomCustomer);
   }
@@ -42,24 +42,7 @@ Store.prototype.postToPage = function() {
   var containerEl = document.createElement('section');
   postToThePage.appendChild(containerEl);
 
-  var headingEl = document.createElement('h1');
-  headingEl.textContent = this.location;
-  containerEl.appendChild(headingEl);
 
-  var ulEl = document.createElement('ul');
-
-  for(var i = 0; i < openHours.length; i++) {
-    var liEl = document.createElement('li');
-    liEl.textContent = `${openHours[i]}: ${this.cookiesPerHour[i]} cookies`;
-    ulEl.appendChild(liEl);
-
-    containerEl.appendChild(ulEl);
-    postToThePage.appendChild(containerEl);
-  }
-
-  var totalEl = document.createElement('li');
-  totalEl.textContent = `Total: ${this.totalCookies} cookies`;
-  ulEl.appendChild(totalEl);
 };
 
 Store.prototype.render = function() {
